@@ -18,7 +18,7 @@ print("****SSH Tunnel Established****")
 server.start()
 # 使用已和local端綁定的port 去遠端連線MySQL
 conn = pymysql.connect(
-        host='127.0.0.1', user="admin",
+        host='0.0.0.0', user="admin",
         password="ab3rdsmysql", port=server.local_bind_port
     )
 
