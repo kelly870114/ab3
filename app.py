@@ -27,7 +27,7 @@ conn = pymysql.connect(
 def get_data():
     try:
         with conn.cursor() as cursor:
-            sql_cmd = 'select * from AB3.ab3_orders LIMIT 0,1000;'  # Select all columns from the 'members' table
+            sql_cmd = 'select * from AB3.ab3_orders LIMIT 0,100;'  # Select all columns from the 'members' table
             cursor.execute(sql_cmd)
             data = cursor.fetchall()
 
