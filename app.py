@@ -65,7 +65,7 @@ def post_data():
             conn.commit()
             return jsonify({'message': 'Data inserted successfully'})
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return e.code
     # finally:
     #     server.stop()
 
