@@ -65,7 +65,7 @@ def post_data():
             conn.commit()
             return jsonify({'message': 'Data inserted successfully'})
     except Exception as e:
-        return e.code
+        return "Record not found", 400
     # finally:
     #     server.stop()
 
