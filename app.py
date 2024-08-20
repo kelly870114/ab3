@@ -27,23 +27,22 @@ conn = pymysql.connect(
 def get_data():
     try:
         with conn.cursor() as cursor:
-            sql_cmd = 'select * from AB3.ab3_orders LIMIT 0,10;'  # Select all columns from the 'members' table
+            sql_cmd = 'SELECT * FROM AB3.ab3_catalog LIMIT 0,10;'  # Select all columns from the 'ab3_catalog' table
             cursor.execute(sql_cmd)
             data = cursor.fetchall()
 
-            orders = []
+            games = []
             for row in data:
-                order = {
-                    'order_id': row[0],
-                    'table_id': row[1],
-                    'orders': row[2],
-                    'order_time': row[3],
-                    'order_status': row[4],
-                    # Add other columns here if available in the 'orders' table
+                game = {
+                    'game_id': row[0],
+                    'game_title': row[1],
+                    'game_description': row[2],
+                    'release_date': row[3],
+                    'game_price': row[4],
                 }
-                orders.append(order)
-            print(orders)
-            return jsonify(orders)
+                games.append(game)
+            print(games)
+            return jsonify(games)
     except Exception as e:
         return jsonify({'error': str(e)})
    #  finally:
@@ -54,16 +53,16 @@ def post_data():
     try:
         with conn.cursor() as cursor:
             data = request.json
-            # order_id = data.get('order_id')
-            table_id = data.get('table_id')
-            orders = data.get('orders')
-            order_time = data.get('order_time')
-            order_status = data.get('order_status')
-            # Insert a new row into the 'members' table
-            sql_cmd = 'INSERT INTO AB3.ab3_orders (table_id, orders, order_time, order_status) VALUES (%s, %s, %s, %s)'
-            cursor.execute(sql_cmd, (table_id, orders, order_time, order_status))
+            # game_id = data.get('game_id')
+            game_title = data.get('game_title')
+            game_description = data.get('game_description')
+            release_date = data.get('release_date')
+            game_price = data.get('game_price')
+            
+            sql_cmd = 'INSERT INTO AB3.ab3_catalog (game_id, game_title, game_description, release_date, game_price) VALUES (%s, %s, %s, %s, %s)'
+            cursor.execute(sql_cmd, (game_title, game_description, release_date, game_price))
             conn.commit()
-            return jsonify({'message': 'Data inserted successfully'})
+            return jsonify({'message': 'Game data inserted successfully'})
     except Exception as e:
         return "Record not found", 400
     # finally:
