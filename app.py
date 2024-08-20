@@ -27,7 +27,7 @@ conn = pymysql.connect(
 def get_data():
     try:
         with conn.cursor() as cursor:
-            sql_cmd = 'SELECT * FROM AB3.ab3_catalog LIMIT 0,10;'  # Select all columns from the 'ab3_catalog' table
+            sql_cmd = 'SELECT * FROM Game.game_catalog LIMIT 0,10;'  # Select all columns from the 'game_catalog' table
             cursor.execute(sql_cmd)
             data = cursor.fetchall()
 
@@ -59,12 +59,12 @@ def post_data():
             release_date = data.get('release_date')
             game_price = data.get('game_price')
             
-            sql_cmd = 'INSERT INTO AB3.ab3_catalog (game_id, game_title, game_description, release_date, game_price) VALUES (%s, %s, %s, %s, %s)'
+            sql_cmd = 'INSERT INTO Game.game_catalog (game_title, game_description, release_date, game_price) VALUES ( %s, %s, %s, %s)'
             cursor.execute(sql_cmd, (game_title, game_description, release_date, game_price))
             conn.commit()
             return jsonify({'message': 'Game data inserted successfully'})
     except Exception as e:
-        return "Record not found", 400
+        return jsonify({'error': str(e)})
     # finally:
     #     server.stop()
 
